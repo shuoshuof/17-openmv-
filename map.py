@@ -8,11 +8,11 @@ import openmv_numpy as np
 
 sensor.reset()
 sensor.set_pixformat(sensor.RGB565)
-sensor.set_framesize(sensor.QVGA) # we run out of memory if the resolution is much bigger...像素为160*120
-sensor.set_brightness(2000) # 设置图像亮度 越大越亮
+sensor.set_framesize(sensor.QVGA) 
+sensor.set_brightness(2000) 
 sensor.skip_frames(time = 100)
-sensor.set_auto_gain(True)  # must turn this off to prevent image washout...
-sensor.set_auto_whitebal(True)  # must turn this off to prevent image washout...
+sensor.set_auto_gain(True)  
+sensor.set_auto_whitebal(True)  
 sensor.set_auto_exposure(False,100)
 
 

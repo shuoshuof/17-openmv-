@@ -1,5 +1,3 @@
-# Untitled - By: 86178 - 周一 4月 4 2022
-
 import sensor, image, time
 from machine import UART
 import time
