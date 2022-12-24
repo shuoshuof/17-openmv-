@@ -1,7 +1,6 @@
 import sensor, image, time
 from machine import UART
 import time
-import mtx
 import pyb
 from pyb import LED
 from machine import Pin
@@ -17,26 +16,18 @@ sensor.set_auto_exposure(True)
 a4_w = 297
 a4_h = 210
 
-
 world_positions = [[(-a4_w/2),0],[a4_w/2,0],[(a4_w/2),a4_h],[(-a4_w/2),a4_h]]
-def cal_det(XY,UV):
 
+#返回透视矩阵
+#XY为世界坐标，UV为相机坐标
+def cal_mtx(UV:np.array,XY:np.array)->np.array:
     A = []
     B =[]
     for i in range(4):
-        a = [[XY[i][0],XY[i][1],1,0,0,0,-UV[i][0]*XY[i][0],-UV[i][0]*XY[i][1]],
-             [0,0,0,XY[i][0],XY[i][1],1,-UV[i][1]*XY[i][0],-UV[i][1]*XY[i][1]]]
-        B+= [UV[i][0],UV[i][1]]
-        A+=a
-    return A,B
-def cal_mtx(XY:np.array,UV:np.array)->np.array:
-    A = []
-    B =[]
-    for i in range(4):
-        a = [[XY[i][0],XY[i][1],1,0,0,0,-UV[i][0]*XY[i][0],-UV[i][0]*XY[i][1]],
-             [0,0,0,XY[i][0],XY[i][1],1,-UV[i][1]*XY[i][0],-UV[i][1]*XY[i][1]]]
-        B+= [[UV[i][0]],
-             [UV[i][1]]]
+        a = [[UV[i][0],UV[i][1],1,0,0,0,-XY[i][0]*UV[i][0],-XY[i][0]*UV[i][1]],
+             [0,0,0,UV[i][0],UV[i][1],1,-XY[i][1]*UV[i][0],-XY[i][1]*UV[i][1]]]
+        B+= [[XY[i][0]],
+             [XY[i][1]]]
         A+=a
 
     A = np.array(A)
