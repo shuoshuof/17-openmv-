@@ -16,7 +16,7 @@ sensor.set_auto_exposure(True)
 a4_w = 297
 a4_h = 210
 
-world_positions = [[(-a4_w/2),0],[a4_w/2,0],[(a4_w/2),a4_h],[(-a4_w/2),a4_h]]
+world_coordinates = [[(-a4_w/2),0],[a4_w/2,0],[(a4_w/2),a4_h],[(-a4_w/2),a4_h]]
 
 #返回透视矩阵
 #XY为世界坐标，UV为相机坐标
@@ -47,17 +47,17 @@ while(True):
 
     for r in img.find_rects(threshold = 20000):
         img.draw_rectangle(r.rect(), color = (255, 0, 0))
-        img_position=[]
+        img_coordinate=[]
         print("********")
         if show:
             for p in r.corners():
                 img.draw_circle(p[0], p[1], 2, color = (0, 255, 0))
-                img_position.append([p[0]-80, 120-p[1]])
+                img_coordinate.append([p[0]-80, 120-p[1]])
                 print(p[0]-80,120-p[1])
-        dn_cx = (img_position[0][0]+img_position[1][0])/2
-        dn_cy = (img_position[1][0]+img_position[1][1])/2
-        up_cx = (img_position[2][0]+img_position[3][0])/2
-        up_cy = (img_position[2][1]+img_position[3][1])/2
+        dn_cx = (img_coordinate[0][0]+img_coordinate[1][0])/2
+        dn_cy = (img_coordinate[1][0]+img_coordinate[1][1])/2
+        up_cx = (img_coordinate[2][0]+img_coordinate[3][0])/2
+        up_cy = (img_coordinate[2][1]+img_coordinate[3][1])/2
         print((dn_cx+up_cx)/2)
         #居中判定
         if abs((dn_cx-up_cx)/(dn_cy-up_cy))<=0.05 and abs((dn_cx+up_cx)/2)<=5:
