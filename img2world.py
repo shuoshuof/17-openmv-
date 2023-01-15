@@ -13,6 +13,7 @@ sensor.set_auto_exposure(True)
 
 
 #A4纸参数
+#可以换成其它
 a4_w = 297
 a4_h = 210
 
