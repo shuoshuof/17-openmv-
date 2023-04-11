@@ -17,10 +17,10 @@ sensor.set_auto_exposure(False,100)
 
 
 
-world_coordinates = [[40,140],
+world_coordinates = np.array([[40,140],
                      [180,140],
                      [180,40],
-                     [40,40]]
+                     [40,40]])
 
 #返回透视矩阵
 #XY为世界坐标，UV为相机坐标
@@ -67,10 +67,12 @@ def map(img):
                 if len(blobs):
                     points.append([c[0], c[1], 1])
 
-            if show:
-                for p in r.corners():
-                    img.draw_circle(p[0], p[1], 2, color = (0, 0, 255))
-                    img_coordinate.append([p[0], p[1]])
+
+            for p in r.corners():
+                img.draw_circle(p[0], p[1], 2, color = (0, 0, 255))
+                img_coordinate.append([p[0], p[1]])
+            if len(img_coordinate)!=4:
+                break
 
             img_coordinate[0][1]-=3
             img_coordinate[1][1]-=3
@@ -91,7 +93,6 @@ if __name__ == '__main__':
             continue
 
         img_coordinate =np.array(img_coordinate)
-        world_coordinates =np.array(world_coordinates)
 
         H= cal_mtx(img_coordinate,world_coordinates)
 
